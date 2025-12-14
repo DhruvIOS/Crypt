@@ -1,0 +1,20 @@
+# Build Output
+out
+dist
+build
+
+# Dependencies
+node_modules
+
+# VS Code Extension specific
+.vscode-test/
+*.vsix
+*.vsixmanifest
+
+# Secrets (CRITICAL)
+.env
+.npmrc
+
+# OS Junk
+.DS_Store
+Thumbs.db

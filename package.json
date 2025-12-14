@@ -1,0 +1,100 @@
+{
+  "name": "crypt",
+  "displayName": "Crypt",
+  "description": "Stop hoarding code. Bury it in the sidebar and resurrect it later.",
+  "version": "0.0.1",
+  "publisher": "Dhruv. S",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/crypt.git"
+  },
+  "engines": {
+    "vscode": "^1.107.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:cryptSidebar" 
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "crypt-container",
+          "title": "Crypt",
+          "icon": "resources/dark/crypt-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "crypt-container": [
+        {
+          "id": "cryptSidebar",
+          "name": "Buried Code"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "crypt.bury",
+        "title": "Bury Code",
+        "icon": "$(archive)"
+      },
+      {
+        "command": "crypt.resurrect",
+        "title": "Resurrect",
+        "icon": "$(reply)"
+      },
+      {
+        "command": "crypt.delete",
+        "title": "Delete Permanently",
+        "icon": "$(trash)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "crypt.bury",
+          "group": "modification",
+          "when": "editorHasSelection"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "crypt.resurrect",
+          "group": "inline"
+        },
+        {
+          "command": "crypt.delete",
+          "group": "inline"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.107.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "typescript-eslint": "^8.48.1",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3",
+    "ts-loader": "^9.5.4",
+    "webpack": "^5.103.0",
+    "webpack-cli": "^6.0.1",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
