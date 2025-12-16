@@ -2,14 +2,15 @@
   "name": "crypt",
   "displayName": "Crypt",
   "description": "Stop hoarding code. Bury it in the sidebar and resurrect it later.",
-  "version": "0.0.1",
-  "publisher": "Dhruv. S",
+  "version": "1.0.0",
+  "publisher": "DhruvS",
+  "icon": "resources/dark/crypt_logo.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/crypt.git"
+    "url": "https://github.com/DhruvIOS/Crypt"
   },
   "engines": {
-    "vscode": "^1.107.0"
+    "vscode": "^1.90.0"
   },
   "categories": [
     "Other"
@@ -24,8 +25,9 @@
         {
           "id": "crypt-container",
           "title": "Crypt",
-          "icon": "resources/dark/crypt-icon.svg"
+          "icon": "resources/dark/crypt-icon.png"
         }
+
       ]
     },
     "views": {
@@ -85,7 +87,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.107.0",
+    "@types/vscode": "^1.85.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
     "typescript-eslint": "^8.48.1",

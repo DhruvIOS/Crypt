@@ -14,6 +14,9 @@ export class CryptProvider implements vscode.TreeDataProvider<BuriedCode> {
     refresh(): void {
         this._onDidChangeTreeData.fire();
     }
+    
+
+    
 
     getTreeItem(element: BuriedCode): vscode.TreeItem {
         // Create the UI element for a specific snippet

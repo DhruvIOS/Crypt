@@ -1,7 +1,7 @@
 # Crypt
 
 <p align="center">
-  <img src="./src/resources/dark/crypt.svg" alt="Crypt Logo" width="200"/>
+  <img src="resources/dark/crypt_logo.png" alt="Crypt Logo" width="200"/>
 </p>
 
 <p align="center">
