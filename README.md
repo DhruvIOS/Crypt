@@ -63,7 +63,7 @@ This extension contributes the following settings:
 
 ## Release Notes
 
-### 1.0.1
+### 1.0.2
 Initial release of Crypt.
 * Added Bury and Resurrect functionality.
 * Added Sidebar view.
