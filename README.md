@@ -9,12 +9,12 @@
 </p>
 
 <p align="center">
-    <a href="https://marketplace.visualstudio.com/items?itemName=yourname.crypt">
-        <img src="https://img.shields.io/visual-studio-marketplace/v/yourname.crypt?color=333333&label=VS%20Code%20Marketplace" alt="Version">
-    </a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=yourname.crypt">
-        <img src="https://img.shields.io/visual-studio-marketplace/i/yourname.crypt?color=333333&label=Installs" alt="Installs">
-    </a>
+ <a href="https://marketplace.visualstudio.com/items?itemName=DhruvS.crypt">
+    <img src="https://img.shields.io/visual-studio-marketplace/v/DhruvS.crypt?color=333333&label=VS%20Code%20Marketplace" alt="Version">
+</a>
+<a href="https://marketplace.visualstudio.com/items?itemName=DhruvS.crypt">
+    <img src="https://img.shields.io/visual-studio-marketplace/i/DhruvS.crypt?color=333333&label=Installs" alt="Installs">
+</a>
 </p>
 
 ---
