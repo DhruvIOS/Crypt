@@ -23,6 +23,7 @@
 
 Crypt gives you a **Sophisticated Storage** solution right in your sidebar. Select your code, "Bury" it to remove it from the editor, and "Resurrect" it instantly when the time is right.
 
+
 ## Features
 
 ### ⚰️ Bury Code

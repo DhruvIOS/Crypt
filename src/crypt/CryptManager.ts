@@ -20,42 +20,36 @@ export class CryptManager{
         this.storage = storage;
     }
 
+
     //2. Save a ne snippet
 
-    public async buryCode(editor: vscode.TextEditor): Promise<void>{
-        const selection = editor.selection;
-        const text = editor.document.getText(selection);
+// Update buryCode to accept 3 specific arguments
+async buryCode(filePath: string, line: number, code: string) {
+        //1. Extract just the file name
+        const fileName = filePath.split(/[/\\]/).pop() || 'Unknown File';
 
-        if(!text.trim()){
-            vscode.window.showWarningMessage("You can't bury empty");
-            return;
-        }
-
-        const filePath = editor.document.uri.fsPath;
-        const fileName = path.basename(filePath);
-
-        const snippet: BuriedCode = {
-            id: this.generateId(),
-            code: text,
+        //2. Create the full object
+        const newSnippet: BuriedCode = {
+            id: Date.now().toString(),
             filePath: filePath,
             fileName: fileName,
-            line: selection.start.line,
+            line: line,
+            code: code,
             timestamp: Date.now()
-
         };
+        
+        //3. save it
+        const snippets = this.getBuriedCode();
+        snippets.push(newSnippet);
 
-        //Get current list, add new one, save back
-        const currentCrypt = this.getBuriedCode();
-        currentCrypt.push(snippet);
-        await this.storage.update(this.STORAGE_KEY, currentCrypt);
+        // FIX: Use 'this.context' (or 'this.storage') instead of 'this.globalState'
+        // If your constructor uses 'Memento', this usually works directly:
+        await this.storage.update(this.STORAGE_KEY, snippets);
 
-        //Delete from editor
-        await editor.edit(editBuilder => {
-            editBuilder.delete(selection);
-        });
+    
+    
+}
 
-        vscode.window.showInformationMessage(`Buried code from ${fileName}.`)
-    }
 
     public getBuriedCode(): BuriedCode[]{
         return this.storage.get<BuriedCode[]>(this.STORAGE_KEY) || [];
@@ -74,5 +68,27 @@ export class CryptManager{
     //Helper to generate a unique ID
     private generateId(): string{
         return Math.random().toString(36).substring(2,15) + Math.random().toString(36).substring(2,15);
+    }
+
+    // Add this missing function to fix the first error
+    public async resurrectCode(id: string): Promise<void> {
+        const snippets = this.getBuriedCode();
+        const snippetToRestore = snippets.find(s => s.id === id);
+
+        if (!snippetToRestore) {
+            return;
+        }
+
+        const editor = vscode.window.activeTextEditor;
+        if (editor) {
+            // Restore code at the original line
+            await editor.edit(editBuilder => {
+                const position = new vscode.Position(snippetToRestore.line, 0);
+                editBuilder.insert(position, snippetToRestore.code + '\n');
+            });
+
+            // Remove it from the graveyard after restoring
+            await this.deleteSnippet(id);
+        }
     }
 }
