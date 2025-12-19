@@ -11,11 +11,9 @@ export class CryptProvider implements vscode.TreeDataProvider<BuriedCode> {
 
     constructor(private cryptManager: CryptManager) { }
 
-    refresh(): void {
+   refresh(): void {
         this._onDidChangeTreeData.fire();
     }
-    
-
     
 
     getTreeItem(element: BuriedCode): vscode.TreeItem {
