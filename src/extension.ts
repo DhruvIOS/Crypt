@@ -8,6 +8,27 @@ let decorationType: vscode.TextEditorDecorationType;
 
 export function activate(context: vscode.ExtensionContext){
     const cryptManager = new CryptManager(context.globalState);
+
+        // --- NEW: VERISON UPDATE NOTIFICATION ---
+
+        const extensionId = 'Dhruvs.crypt'; // Extension ID
+        const extension = vscode.extensions.getExtension(extensionId);
+        const currentVersion = extension?.packageJSON.version;
+        const previousVersion = context.globalState.get<string>('cryptVersion');
+
+        if(currentVersion && currentVersion !== previousVersion){
+            vscode.window.showInformationMessage(
+                `Crypt updated to v${currentVersion}! 👻 New Feature: "The Eulogy" - Add notes to your buried code`,
+                "See changelogs"
+            ).then(selection =>{
+                if(selection === "See changelogs"){
+                    vscode.env.openExternal(vscode.Uri.parse('https://marketplace.visualstudio.com/items?itemName=DhruvS.crypt'))
+                }
+            });
+            //Update the stored version
+            context.globalState.update('cryptVersion', currentVersion);
+        }
+        // ----------------------------------------
     const cryptProvider = new CryptProvider(cryptManager);
 
     //Register the sidebar Data provider
@@ -35,7 +56,16 @@ export function activate(context: vscode.ExtensionContext){
             vscode.window.showErrorMessage('Highlight some code to bury it.');
             return;
         }
-        await cryptManager.buryCode(editor.document.uri.fsPath, selection.start.line, text);
+
+        //1. Ask the user for a "Eulogy" (Reason)
+        const reason = await vscode.window.showInputBox({
+            placeHolder: "E.g., 'Broken logic' or 'Refactoring (Press Enter to skip)",
+
+            prompt: "Why are you burying this code (Optional)"
+        })
+
+        //2. Pass the reason to the manager)
+        await cryptManager.buryCode(editor.document.uri.fsPath, selection.start.line, text, reason);
 
         //Remove the code from the editor
         editor.edit(editBuilder => {
@@ -150,7 +180,12 @@ function updateDecorations(editor: vscode.TextEditor, cryptManager: CryptManager
             previewText += "...";
         }
 
-        //3. Construct the Decoration
+        let finalLabel = previewText;
+        if(item.reason){
+            finalLabel = `[${item.reason} ${previewText}]`
+        }
+
+        //2. Construct the Decoration
 
         return{
             //Use the whole line range to ensure alignment
@@ -158,7 +193,7 @@ function updateDecorations(editor: vscode.TextEditor, cryptManager: CryptManager
             hoverMessage: hoverContent,
             renderOptions: {
                 after: {
-                    contentText: `  👻 ${previewText} (Buried)`, // The visible Ghost Text
+                    contentText: `  👻 ${finalLabel} (Buried)`, // The visible Ghost Text
                     color: new vscode.ThemeColor('editorCodeLens.foreground'), // Faint grey
                     fontStyle: 'italic',
                     fontWeight: 'bold',

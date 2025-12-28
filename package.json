@@ -2,7 +2,7 @@
   "name": "crypt",
   "displayName": "Crypt",
   "description": "Stop hoarding code. Bury it in the sidebar and resurrect it later.",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "publisher": "DhruvS",
   "icon": "resources/dark/crypt_logo.png",
   "repository": {
