@@ -10,6 +10,7 @@ export interface BuriedCode{
     fileName: string;  //Readability for the UI
     line: number;  //Original line number
     timestamp: number;  //When it was buried
+    reason?: string;
 }
 
 export class CryptManager{
@@ -24,7 +25,7 @@ export class CryptManager{
     //2. Save a ne snippet
 
 // Update buryCode to accept 3 specific arguments
-async buryCode(filePath: string, line: number, code: string) {
+async buryCode(filePath: string, line: number, code: string, reason?: string) {
         //1. Extract just the file name
         const fileName = filePath.split(/[/\\]/).pop() || 'Unknown File';
 
@@ -35,7 +36,8 @@ async buryCode(filePath: string, line: number, code: string) {
             fileName: fileName,
             line: line,
             code: code,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            reason: reason
         };
         
         //3. save it
